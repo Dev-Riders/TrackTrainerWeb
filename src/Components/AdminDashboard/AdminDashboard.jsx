@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './AdminDashboard.css';
 
+// Componente que representa el panel de administrador
 const AdminDashboard = () => {
     return (
         <div className="admin-dashboard-container">

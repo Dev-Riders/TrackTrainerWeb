@@ -23,8 +23,8 @@ const Header = ({ authenticated, setAuthenticated }) => {
             <div className="auth-buttons">
                 {authenticated ? (
                     <>
-                        <Link onClick={handleLogout}>Cerrar sesión</Link>
                         <Link to="/admin">Admin Dashboard</Link>
+                        <Link onClick={handleLogout}>Cerrar sesión</Link>
                     </>
                 ) : (
                     <>

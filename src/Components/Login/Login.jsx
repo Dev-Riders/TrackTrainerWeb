@@ -19,13 +19,13 @@ const Login = ({ setAuthenticated }) => {
 
     const handleLogin = () => {
         axios
-            .post('http://localhost:25513/api/usuario/admin-login', {  // Cambia la URL al endpoint adecuado para el inicio de sesión de administrador
+            .post('http://localhost:25513/api/administrador/login', {
                 correo: email,
                 contraseña: password,
             })
             .then(response => {
                 const token = response.data;
-                localStorage.setItem('token', token);
+                localStorage.setItem('token', token); //cambiar loclaStorage por cookies
                 setAuthenticated(true);
                 setErrorMessage('');
                 navigate('/admin');

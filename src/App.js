@@ -13,7 +13,7 @@ const App = () => {
 
     return (
 
-            <div>
+            <>
                 <Header authenticated={authenticated} setAuthenticated={setAuthenticated} />
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -32,7 +32,7 @@ const App = () => {
                         <Route path="/lista" element={<Navigate to="/login" />} />
                     )}
                 </Routes>
-            </div>
+            </>
     );
 };
 

@@ -4,7 +4,7 @@ const Home = () => {
     const appName = "TrackTrainer";
 
     return (
-        <div>
+        <div id="home">
             <h1>Bienvenido a {appName}</h1>
         </div>
     );
