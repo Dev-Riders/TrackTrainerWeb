@@ -25,7 +25,7 @@ const Login = ({ setAuthenticated }) => {
             })
             .then(response => {
                 const token = response.data;
-                localStorage.setItem('token', token); //cambiar loclaStorage por cookies
+                localStorage.setItem('token', token); // Cambiar localStorage por cookies o una solución de manejo de tokens segura
                 setAuthenticated(true);
                 setErrorMessage('');
                 navigate('/admin');

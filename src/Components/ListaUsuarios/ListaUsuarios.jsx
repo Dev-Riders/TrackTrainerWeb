@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from 'gridjs-react';
-import 'gridjs/dist/theme/mermaid.css';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/es';
 import './ListaUsuarios.css';
@@ -10,24 +9,29 @@ const ListaUsuarios = () => {
     const [perPage, setPerPage] = useState(10);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchUsuarios = async () => {
+            setLoading(true);
             try {
                 const token = localStorage.getItem('token');
 
-                const response = await fetch(`http://localhost:25513/api/administrador/usuarios?page=${page}&size=${perPage}`, {
-                    headers: {
-                        Authorization: token,
-                    },
-                });
+                const response = await fetch(
+                    `http://localhost:25513/api/administrador/usuarios?page=${page}&size=${perPage}`,
+                    {
+                        headers: {
+                            Authorization: token,
+                        },
+                    }
+                );
 
                 if (response.ok) {
                     const data = await response.json();
                     console.log('Datos de la respuesta:', data);
 
                     if (data.usuarios && Array.isArray(data.usuarios)) {
-                        const formattedUsuarios = data.usuarios.map(usuario => {
+                        const formattedUsuarios = data.usuarios.map((usuario) => {
                             const fechaCreacion = moment(usuario.fechaCreacion).format('DD/MM/YYYY');
                             return { ...usuario, fechaCreacion };
                         });
@@ -42,17 +46,18 @@ const ListaUsuarios = () => {
             } catch (error) {
                 console.error('Error al obtener la lista de usuarios:', error.message);
             }
+            setLoading(false);
         };
 
         fetchUsuarios();
     }, [page, perPage]);
 
     const nextPage = () => {
-        setPage(prevPage => prevPage + 1);
+        setPage((prevPage) => prevPage + 1);
     };
 
     const prevPage = () => {
-        setPage(prevPage => Math.max(prevPage - 1, 0));
+        setPage((prevPage) => Math.max(prevPage - 1, 0));
     };
 
     const goToFirstPage = () => {
@@ -67,103 +72,98 @@ const ListaUsuarios = () => {
         setPage(pageNum);
     };
 
-    const gridData = usuarios.map(usuario => [
-        usuario.nombre,
-        usuario.apellido,
-        usuario.nickname,
-        usuario.correo,
-        usuario.verified ? 'Si' : 'No',
-        usuario.fechaCreacion,
-    ]);
-
-    // Crear un array de números para las páginas a mostrar
     let pagesToShow = [];
     for (let i = Math.max(page - 2, 0); i <= Math.min(page + 2, totalPages - 1); i++) {
         pagesToShow.push(i);
     }
 
     return (
-        <div>
+        <div className="tabla-usuarios">
             <h2>Lista de usuarios</h2>
 
-            <div>
-                <label>Elementos por página: </label>
-                <select
-                    value={perPage}
-                    onChange={(e) => {
-                        setPerPage(parseInt(e.target.value));
-                        setPage(0); // Restablecer la página al cambiar el tamaño de la página
-                    }}
-                >
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={20}>20</option>
-                    <option value={50}>50</option>
-                </select>
-            </div>
-
-            <Grid
-                data={gridData}
-                columns={['Nombre', 'Apellido', 'Nickname', 'Correo', 'Verificado', 'Fecha de Creación']}
-                pagination={false} // Desactivar la paginación del lado del cliente
-                search={true}
-                sort={true}
-                resizable={true}
-                className={{
-                    paginationButton: 'pagination-button',
-                    paginationButtonNext: 'pagination-button-next',
-                    paginationButtonPrev: 'pagination-button-prev',
-                    paginationButtonCurrent: 'pagination-button-current',
-                }}
-            />
-
-            <div className="lista-usuarios-container">
-                <div>
-                <button onClick={prevPage} disabled={page === 0}>
-                    Anterior
-                </button>
+            {loading ? (
+                <div className="loading-container">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Cargando...</span>
+                    </div>
                 </div>
-                {page > 1 && (
-                    <>
+            ) : (
+                <>
                     <div>
-                        <button onClick={goToFirstPage}>
-                            1
-                        </button>
+                        <label>Elementos por página: </label>
+                        <select
+                            className="form-select form-select-sm mt-3"
+                            value={perPage}
+                            onChange={(e) => {
+                                setPerPage(parseInt(e.target.value));
+                                setPage(0); // Restablecer la página al cambiar el tamaño de la página
+                            }}
+                            style={{ width: '100px' }}
+                        >
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={50}>50</option>
+                        </select>
                     </div>
-                        {page > 2 && (
-                            <span className="pagination-dots">...</span>
-                        )}
-                    </>
-                )}
-                {pagesToShow.map((pageNum) => (
-                    <div>
-                    <button
-                        key={pageNum}
-                        onClick={() => handleGoToPage(pageNum)}
-                        className={pageNum === page ? 'pagination-button-current' : 'pagination-button'}
-                    >
-                        {pageNum + 1}
-                    </button>
-                    </div>
-                ))}
-                {page < totalPages - 3 && (
-                    <span className="pagination-dots">...</span>
-                )}
-                {page < totalPages - 1 && ( // Verificar si estás en una página distinta de la última o la penúltima
-                    <>
+
+                    <table className="table">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Nickname</th>
+                            <th>Correo</th>
+                            <th>Verificado</th>
+                            <th>Fecha de Creación</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {usuarios.map((usuario, index) => (
+                            <tr key={index}>
+                                <td>{usuario.nombre}</td>
+                                <td>{usuario.apellido}</td>
+                                <td>{usuario.nickname}</td>
+                                <td>{usuario.correo}</td>
+                                <td>{usuario.verified ? 'Si' : 'No'}</td>
+                                <td>{usuario.fechaCreacion}</td>
+                                <td>
+                                    <Link to={`/usuario/${usuario.id}`}>
+                                        <button className="btn btn-primary">Detalles</button>
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+
+                    <div className="lista-usuarios-container">
                         <div>
-                        <button onClick={goToLastPage}>
-                            {totalPages}
-                        </button>
+                            <button onClick={prevPage} disabled={page === 0} className="btn btn-primary">
+                                Anterior
+                            </button>
                         </div>
-                    </>
-                )}
-                <div>
-                <button onClick={nextPage} disabled={page + 1 === totalPages}>
-                    Siguiente
-                </button>
-                </div>
-            </div>
+                        {pagesToShow.map((pageNum) => (
+                            <div key={pageNum}>
+                                <button
+                                    onClick={() => handleGoToPage(pageNum)}
+                                    className={`btn btn-primary ${
+                                        pageNum === page ? 'pagination-button-current' : 'pagination-button'
+                                    }`}
+                                >
+                                    {pageNum + 1}
+                                </button>
+                            </div>
+                        ))}
+                        <div>
+                            <button onClick={nextPage} disabled={page + 1 === totalPages} className="btn btn-primary">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

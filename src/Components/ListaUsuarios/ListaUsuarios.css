@@ -1,7 +1,9 @@
 .lista-usuarios-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     margin-top: 10px;
+    margin-right: 20px;
+    gap: 5px;
 }
 
 .lista-usuarios-container button {
@@ -13,16 +15,22 @@
     cursor: pointer;
 
 }
-
 .lista-usuarios-container button:hover {
     background-color: #0069d9;
 }
-
-
 
 .lista-usuarios-container button.pagination-button-current {
     font-weight: bold;
 }
 .pagination-dots {
     margin: 0 4px;
+}
+.tabla-usuarios {
+    margin: 0 10px;
+}
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
 }
