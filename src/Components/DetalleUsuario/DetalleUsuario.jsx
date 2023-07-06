@@ -157,36 +157,39 @@ const DetalleUsuario = () => {
             </div>
         </div>
 
-        <div className="float-right mt-3">
-            {editMode ? (
-                <button className="btn btn-primary" onClick={handleDisableAccount}>
-                    Deshabilitar cuenta
-                </button>
-            ) : (
-                <>
-                    <button className="btn btn-primary" onClick={handleEdit}>
-                        Editar
-                    </button>
-                    <button className="btn btn-primary" onClick={handleDisableAccount}>
-                        Deshabilitar cuenta
-                    </button>
-                </>
-            )}
+            <div className="d-flex justify-content-between mt-3">
+                <Link to="/lista" className="btn btn-link">
+                    <button className="btn btn-primary">Volver</button>
+                </Link>
 
-            {editMode && (
-                <>
-                    <button className="btn btn-primary">Guardar</button>
-                    <button className="btn btn-primary" onClick={handleEnableAccount}>
-                        Habilitar cuenta
-                    </button>
-                </>
-            )}
+                <div>
+                    {editMode ? (
+                        <button className="btn btn-primary btn-sm" onClick={handleDisableAccount}>
+                            Deshabilitar cuenta
+                        </button>
+                    ) : (
+                        <>
+                            <button className="btn btn-primary btn-sm mr-2" onClick={handleEdit}>
+                                Editar
+                            </button>
+                            <button className="btn btn-primary btn-sm" onClick={handleDisableAccount}>
+                                Deshabilitar cuenta
+                            </button>
+                        </>
+                    )}
 
-            <Link to="/lista" className="btn btn-link">
-                <button className="btn btn-primary">Volver</button>
-            </Link>
+                    {editMode && (
+                        <>
+                            <button className="btn btn-primary btn-sm mr-2">Guardar</button>
+                            <button className="btn btn-primary btn-sm" onClick={handleEnableAccount}>
+                                Habilitar cuenta
+                            </button>
+                        </>
+                    )}
+                </div>
+            </div>
+
         </div>
-</div>
 );
 };
 
