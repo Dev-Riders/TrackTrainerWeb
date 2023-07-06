@@ -10,7 +10,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import './Style.css';
 ReactDOM.render(
     <Router>
-        <App />
+        <App/>
     </Router>,
     document.getElementById('root')
 );

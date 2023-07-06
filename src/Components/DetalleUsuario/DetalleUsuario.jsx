@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import moment from 'moment';
+import 'moment/locale/es';
 
 const DetalleUsuario = () => {
     const { id } = useParams();
@@ -45,7 +47,6 @@ const DetalleUsuario = () => {
                 method: 'PUT',
             });
             if (response.ok) {
-                // Lógica adicional si es necesario
                 console.log('Cuenta deshabilitada correctamente');
             } else {
                 console.error('Error al deshabilitar la cuenta del usuario');
@@ -61,7 +62,6 @@ const DetalleUsuario = () => {
                 method: 'PUT',
             });
             if (response.ok) {
-                // Lógica adicional si es necesario
                 console.log('Cuenta habilitada correctamente');
             } else {
                 console.error('Error al habilitar la cuenta del usuario');
@@ -79,25 +79,85 @@ const DetalleUsuario = () => {
         return <div>No se encontró el usuario</div>;
     }
 
+    const formattedFechaCreacion = moment(usuario.fecha_creacion).format('YYYY-MM-DD').substring(0, 10);
+    const formattedFechaEliminacion = usuario.fecha_eliminacion ? moment(usuario.fecha_eliminacion).format('YYYY-MM-DD HH:mm:ss') : null;
+    const formattedFechaActualizacion = usuario.fecha_actualizacion ? moment(usuario.fecha_actualizacion).format('YYYY-MM-DD HH:mm:ss') : null;
+
     return (
-        <div>
+        <div className="container">
             <h2>Detalle de Usuario</h2>
 
-            <label htmlFor="nombre">Nombre:</label>
-            <input type="text" id="nombre" value={usuario.nombre} disabled={!editMode} />
+            <div className="form-group row">
+                <label htmlFor="nombre" className="col-sm-2 col-form-label">Nombre:</label>
+                <div className="col-sm-10">
+                    <input type="text" id="nombre" value={usuario.nombre} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
 
-            <label htmlFor="apellido">Apellido:</label>
-            <input type="text" id="apellido" value={usuario.apellido} disabled={!editMode} />
+            <div className="form-group row">
+                <label htmlFor="apellido" className="col-sm-2 col-form-label">Apellido:</label>
+                <div className="col-sm-10">
+                    <input type="text" id="apellido" value={usuario.apellido} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
 
-            <label htmlFor="nickname">Nickname:</label>
-            <input type="text" id="nickname" value={usuario.nickname} disabled={!editMode} />
+            <div className="form-group row">
+                <label htmlFor="nickname" className="col-sm-2 col-form-label">Nickname:</label>
+                <div className="col-sm-10">
+                    <input type="text" id="nickname" value={usuario.nickname} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
 
-            <label htmlFor="correo">Correo:</label>
-            <input type="email" id="correo" value={usuario.correo} disabled={!editMode} />
+            <div className="form-group row">
+                <label htmlFor="correo" className="col-sm-2 col-form-label">Correo:</label>
+                <div className="col-sm-10">
+                    <input type="email" id="correo" value={usuario.correo} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
 
-            <label htmlFor="verificado">Verificado:</label>
-            <input type="checkbox" id="verificado" checked={usuario.verified} disabled={!editMode} />
+            <div className="form-group row">
+                <label htmlFor="verificado" className="col-sm-2 col-form-label">Verificado:</label>
+                <div className="col-sm-10">
+                    <input type="checkbox" id="verificado" checked={usuario.verified} disabled={!editMode} />
+                </div>
+            </div>
 
+            <div className="form-group row">
+                <label htmlFor="fecha_creacion" className="col-sm-2 col-form-label">Fecha de creación:</label>
+                <div className="col-sm-10">
+                    <input type="date" id="fecha_creacion" value={formattedFechaCreacion} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
+
+            <div className="form-group row">
+                <label htmlFor="fecha_eliminacion" className="col-sm-2 col-form-label">Fecha de eliminación:</label>
+                <div className="col-sm-10">
+                    <input type="date" id="fecha_eliminacion" value={formattedFechaEliminacion} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
+
+            <div className="form-group row">
+                <label htmlFor="quien_elimino" className="col-sm-2 col-form-label">Quién eliminó:</label>
+                <div className="col-sm-10">
+                    <input type="text" id="quien_elimino" value={usuario.quien_elimino} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
+
+            <div className="form-group row">
+                <label htmlFor="fecha_actualizacion" className="col-sm-2 col-form-label">Fecha de actualización:</label>
+                <div className="col-sm-10">
+                    <input type="date" id="fecha_actualizacion" value={formattedFechaActualizacion} disabled={!editMode} className="form-control" />
+                </div>
+            </div>
+
+            <div className="form-group row">
+            <label htmlFor="quien_actualizo" className="col-sm-2 col-form-label">Quién actualizó:</label>
+            <div className="col-sm-10">
+                <input type="text" id="quien_actualizo" value={usuario.quien_actualizo} disabled={!editMode} className="form-control" />
+            </div>
+        </div>
+
+        <div className="float-right mt-3">
             {editMode ? (
                 <button className="btn btn-primary" onClick={handleDisableAccount}>
                     Deshabilitar cuenta
@@ -122,9 +182,12 @@ const DetalleUsuario = () => {
                 </>
             )}
 
-            <Link to="/">Volver</Link>
+            <Link to="/lista" className="btn btn-link">
+                <button className="btn btn-primary">Volver</button>
+            </Link>
         </div>
-    );
+</div>
+);
 };
 
-export default DetalleUsuario;
+    export default DetalleUsuario;

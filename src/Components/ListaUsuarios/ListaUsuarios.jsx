@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/es';
 import './ListaUsuarios.css';
+import {Link} from "react-router-dom";
 
 const ListaUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -17,21 +17,18 @@ const ListaUsuarios = () => {
             try {
                 const token = localStorage.getItem('token');
 
-                const response = await fetch(
-                    `http://localhost:25513/api/administrador/usuarios?page=${page}&size=${perPage}`,
-                    {
-                        headers: {
-                            Authorization: token,
-                        },
-                    }
-                );
+                const response = await fetch(`http://localhost:25513/api/administrador/usuarios?page=${page}&size=${perPage}`, {
+                    headers: {
+                        Authorization: token,
+                    },
+                });
 
                 if (response.ok) {
                     const data = await response.json();
                     console.log('Datos de la respuesta:', data);
 
                     if (data.usuarios && Array.isArray(data.usuarios)) {
-                        const formattedUsuarios = data.usuarios.map((usuario) => {
+                        const formattedUsuarios = data.usuarios.map(usuario => {
                             const fechaCreacion = moment(usuario.fechaCreacion).format('DD/MM/YYYY');
                             return { ...usuario, fechaCreacion };
                         });
@@ -53,19 +50,11 @@ const ListaUsuarios = () => {
     }, [page, perPage]);
 
     const nextPage = () => {
-        setPage((prevPage) => prevPage + 1);
+        setPage(prevPage => prevPage + 1);
     };
 
     const prevPage = () => {
-        setPage((prevPage) => Math.max(prevPage - 1, 0));
-    };
-
-    const goToFirstPage = () => {
-        setPage(0);
-    };
-
-    const goToLastPage = () => {
-        setPage(totalPages - 1);
+        setPage(prevPage => Math.max(prevPage - 1, 0));
     };
 
     const handleGoToPage = (pageNum) => {
@@ -103,7 +92,6 @@ const ListaUsuarios = () => {
                             <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={20}>20</option>
-                            <option value={50}>50</option>
                         </select>
                     </div>
 
@@ -144,18 +132,30 @@ const ListaUsuarios = () => {
                                 Anterior
                             </button>
                         </div>
+                        {page > 2 && pagesToShow[0] !== 0 && (
+                            <div>
+                                <button onClick={() => setPage(0)} className="btn btn-primary">
+                                    1
+                                </button>
+                            </div>
+                        )}
                         {pagesToShow.map((pageNum) => (
                             <div key={pageNum}>
                                 <button
                                     onClick={() => handleGoToPage(pageNum)}
-                                    className={`btn btn-primary ${
-                                        pageNum === page ? 'pagination-button-current' : 'pagination-button'
-                                    }`}
+                                    className={`btn btn-primary ${pageNum === page ? 'pagination-button-current' : 'pagination-button'}`}
                                 >
                                     {pageNum + 1}
                                 </button>
                             </div>
                         ))}
+                        {page < totalPages - 2 && pagesToShow[pagesToShow.length - 1] !== totalPages - 1 && (
+                            <div>
+                                <button onClick={() => setPage(totalPages - 1)} className="btn btn-primary">
+                                    {totalPages}
+                                </button>
+                            </div>
+                        )}
                         <div>
                             <button onClick={nextPage} disabled={page + 1 === totalPages} className="btn btn-primary">
                                 Siguiente
