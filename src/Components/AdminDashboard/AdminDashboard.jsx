@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faUsers, faChartPie, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import UserCountChart from '../GraficoContadorUsuarios';
 
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ const AdminDashboard = () => {
                         <FontAwesomeIcon icon={faUsers} className="me-2" />
                         <span className={open ? '' : 'visually-hidden'}>Ver lista de usuarios</span>
                     </Link>
-                    {/* Agrega aquí tus enlaces adicionales */}
+                    {/* Agrega aquí enlaces adicionales */}
                 </div>
             </div>
 
@@ -47,12 +48,10 @@ const AdminDashboard = () => {
                     <Col>
                         <Card>
                             <Card.Body>
-                                <div className="d-flex justify-content-center">
-                                    <div className="p-5 border rounded-circle bg-light text-secondary">
-                                        <FontAwesomeIcon icon={faChartPie} size="5x" />
-                                    </div>
+                                <div className="d-flex justify-content-center" style={{ height: '300px' }}>
+                                    <UserCountChart />
                                 </div>
-                                <Card.Title className="mt-3 text-center">Placeholder de gráfico</Card.Title>
+                                <Card.Title className="mt-3 text-center">Linea de tiempo de Usuarios</Card.Title>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -73,5 +72,4 @@ const AdminDashboard = () => {
         </div>
     );
 };
-
 export default AdminDashboard;

@@ -80,8 +80,8 @@ const DetalleUsuario = () => {
     }
 
     const formattedFechaCreacion = moment(usuario.fecha_creacion).format('YYYY-MM-DD').substring(0, 10);
-    const formattedFechaEliminacion = usuario.fecha_eliminacion ? moment(usuario.fecha_eliminacion).format('YYYY-MM-DD HH:mm:ss') : null;
-    const formattedFechaActualizacion = usuario.fecha_actualizacion ? moment(usuario.fecha_actualizacion).format('YYYY-MM-DD HH:mm:ss') : null;
+    const formattedFechaEliminacion = usuario.fecha_eliminacion ? moment(usuario.fecha_eliminacion).format('DD-MM-YYYY HH:mm:ss') : null;
+    const formattedFechaActualizacion = usuario.fecha_actualizacion ? moment(usuario.fecha_actualizacion).format('DD-MM-YYYY HH:mm:ss') : null;
 
     return (
         <div className="container">
