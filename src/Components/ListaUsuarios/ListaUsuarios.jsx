@@ -95,7 +95,7 @@ const ListaUsuarios = () => {
                         </select>
                     </div>
 
-                    <table className="table">
+                    <table className="table table-secondary">
                         <thead>
                         <tr>
                             <th>Nombre</th>
