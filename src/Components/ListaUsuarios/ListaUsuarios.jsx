@@ -10,6 +10,7 @@ const ListaUsuarios = () => {
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         const fetchUsuarios = async () => {
@@ -17,7 +18,17 @@ const ListaUsuarios = () => {
             try {
                 const token = localStorage.getItem('token');
 
-                const response = await fetch(`http://localhost:25513/api/administrador/usuarios?page=${page}&size=${perPage}`, {
+                let url = `http://localhost:25513/api/administrador/usuarios?page=${page}&size=${perPage}`;
+
+                if (search) {
+                    if (search.includes('@')) {
+                        url += `&correo=${search}`;
+                    } else {
+                        url += `&nickname=${search}`;
+                    }
+                }
+
+                const response = await fetch(url, {
                     headers: {
                         Authorization: token,
                     },
@@ -25,7 +36,6 @@ const ListaUsuarios = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('Datos de la respuesta:', data);
 
                     if (data.usuarios && Array.isArray(data.usuarios)) {
                         const formattedUsuarios = data.usuarios.map(usuario => {
@@ -47,7 +57,7 @@ const ListaUsuarios = () => {
         };
 
         fetchUsuarios();
-    }, [page, perPage]);
+    }, [page, perPage, search]);
 
     const nextPage = () => {
         setPage(prevPage => prevPage + 1);
@@ -66,14 +76,34 @@ const ListaUsuarios = () => {
         pagesToShow.push(i);
     }
 
+    const handleClearSearch = () => {
+        setSearch('');
+    };
+
     return (
-        <div className="tabla-usuarios">
+        <div className="tabla-usuarios text-light">
             <h2>Lista de usuarios</h2>
 
+            <div className="d-flex align-items-center">
+                <label className="mr-2">Buscar: </label>
+                <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="bg-light opacity-75 mr-2"
+                />
+                <button onClick={handleClearSearch} className="btn btn-success btn-sm ml-2">
+                    Borrar
+                </button>
+            </div>
+
+
+
+
             {loading ? (
-                <div className="loading-container">
+                <div className="loading-container text-light">
                     <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Cargando...</span>
+                        <span className="visually-hidden text-light">Cargando...</span>
                     </div>
                 </div>
             ) : (
@@ -81,11 +111,11 @@ const ListaUsuarios = () => {
                     <div>
                         <label>Elementos por página: </label>
                         <select
-                            className="form-select form-select-sm mt-3"
+                            className="form-select form-select-sm mt-3 mb-3"
                             value={perPage}
                             onChange={(e) => {
                                 setPerPage(parseInt(e.target.value));
-                                setPage(0); // Restablecer la página al cambiar el tamaño de la página
+                                setPage(0); // Reset page when changing page size
                             }}
                             style={{ width: '100px' }}
                         >
@@ -95,7 +125,8 @@ const ListaUsuarios = () => {
                         </select>
                     </div>
 
-                    <table className="table table-secondary">
+                    <table className="table table-striped table-hover table-bordered table-dark table-secondary
+                    ">
                         <thead>
                         <tr>
                             <th>Nombre</th>
@@ -117,8 +148,8 @@ const ListaUsuarios = () => {
                                 <td>{usuario.verified ? 'Si' : 'No'}</td>
                                 <td>{usuario.fechaCreacion}</td>
                                 <td>
-                                    <Link to={`/usuario/${usuario.id}`}>
-                                        <button className="btn btn-primary">Detalles</button>
+                                    <Link to={`/usuario/${usuario.id}`} className="btn-detalles text-decoration-none">
+                                        <button className="btn">Detalles</button>
                                     </Link>
                                 </td>
                             </tr>

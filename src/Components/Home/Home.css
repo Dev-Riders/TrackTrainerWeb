@@ -1,0 +1,13 @@
+#home {
+    color: white;
+}
+
+.transparent-card {
+    background: transparent;
+    color: white;
+}
+
+.transparent-card .card-title,
+.transparent-card .card-text {
+    color: white;
+}

@@ -34,3 +34,15 @@
     align-items: center;
     height: 200px;
 }
+.btn {
+    width: auto;
+    display: inline-block;
+}
+.btn-detalles {
+    background-color: #0bec19;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+
+}

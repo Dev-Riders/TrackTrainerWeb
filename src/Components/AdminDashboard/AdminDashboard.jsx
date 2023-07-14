@@ -26,9 +26,9 @@ const AdminDashboard = () => {
 
     return (
         <div className="d-flex">
-            <div ref={ref} className={`p-3 bg-light border-right d-flex flex-column ${open ? 'align-items-end' : ''}`} style={{ minWidth: '75px' }} >
+            <div ref={ref} className={`p-3 bg-light bg-opacity-75 border-right d-flex flex-column ${open ? 'align-items-end' : ''}`} style={{ minWidth: '75px' }} >
                 {open ?
-                    <FontAwesomeIcon icon={faTimes} onClick={toggleMenu} size="xs" className="position-absolute top-0 end-0 m-2" />
+                    <FontAwesomeIcon icon={faTimes} onClick={toggleMenu} size="xs" className="position-absolute top-0 end-0 m-2 " />
                     :
                     <FontAwesomeIcon icon={faBars} onClick={toggleMenu} size="lg" className="align-self-start mb-3 cursor-pointer ms-2" />
                 }
@@ -41,14 +41,14 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
-            <Container className="my-4 flex-grow-1">
+            <Container className="my-4 flex-grow-1 text-light">
                 <h2>Panel de administrador</h2>
 
                 <Row className="mt-4" >
                     <Col>
-                        <Card>
+                        <Card className="d-flex justify-content-center bg-light bg-opacity-75">
                             <Card.Body>
-                                <div className="d-flex justify-content-center" style={{ height: '300px' }}>
+                                <div className="d-flex justify-content-center bg-light bg-opacity-75" style={{ height: '300px' }}>
                                     <UserCountChart/>
                                 </div>
                                 <Card.Title className="mt-3 text-center">Linea de tiempo de Usuarios</Card.Title>
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
                         </Card>
                     </Col>
                     <Col>
-                        <Card>
+                        <Card className="d-flex justify-content-center bg-light bg-opacity-75">
                             <Card.Body>
                                 <div className="d-flex justify-content-center">
                                     <div className="p-5 border rounded-circle bg-light text-secondary">
