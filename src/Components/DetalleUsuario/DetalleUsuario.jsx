@@ -170,7 +170,7 @@ const DetalleUsuario = () => {
                         <input
                             type="text"
                             id="quien_elimino"
-                            value={usuario?.quienElimino?.id ?? 'N/A'}
+                            value={usuario?.quienElimino?.nombre ?? 'N/A'}
                             className="form-control"
                         />
                     </div>
@@ -194,7 +194,7 @@ const DetalleUsuario = () => {
                         <input
                             type="text"
                             id="quien_actualizo"
-                            value={usuario?.quienActualizo?.id ?? 'N/A'}
+                            value={usuario?.quienActualizo?.nombre ?? 'N/A'}
                             className="form-control"
                         />
                     </div>
