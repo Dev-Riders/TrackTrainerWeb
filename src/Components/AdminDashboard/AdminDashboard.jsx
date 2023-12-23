@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faUsers, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faUsers, faChartLine, faPersonRunning} from '@fortawesome/free-solid-svg-icons';
 import UserCountChart from '../GraficoContadorUsuarios';
+import GraficoContadorSuscritos from '../GraficoContadorSuscritos';
+
 
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
@@ -37,7 +39,10 @@ const AdminDashboard = () => {
                         <FontAwesomeIcon icon={faUsers} className="me-2" />
                         <span className={open ? '' : 'visually-hidden'}>Ver lista de usuarios</span>
                     </Link>
-                    {/* Agrega aquí enlaces adicionales */}
+                    <Link to="/ejercicios" className="d-flex align-items-center my-3 text-decoration-none pe-1 me-1">
+                        <FontAwesomeIcon icon={faPersonRunning} className="me-2" />
+                        <span className={open ? '' : 'visually-hidden'}>Ejercicios</span>
+                    </Link>
                 </div>
             </div>
 
@@ -55,6 +60,17 @@ const AdminDashboard = () => {
                             </Card.Body>
                         </Card>
                     </Col>
+                    <Col>
+                        <Card className="d-flex justify-content-center bg-light bg-opacity-75">
+                            <Card.Body>
+                                <div className="d-flex justify-content-center bg-light bg-opacity-75" style={{ height: '300px' }}>
+                                    <GraficoContadorSuscritos />
+                                </div>
+                                <Card.Title className="mt-3 text-center">Distribución de Usuarios Suscritos y No Suscritos</Card.Title>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+
                     <Col>
                         <Card className="d-flex justify-content-center bg-light bg-opacity-75">
                             <Card.Body>

@@ -1,0 +1,49 @@
+.editar-ejercicio-container {
+    max-width: 100%;
+    padding: 20px;
+    margin-bottom: 1px;
+    background-color: #f8f9fa; /* Un fondo claro */
+    border: 1px solid #dee2e6; /* Un borde sutil */
+}
+
+.table-editar-ejercicio {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse; /* Para el estilo de tabla */
+}
+
+.table-editar-ejercicio th,
+.table-editar-ejercicio td {
+    border: 1px solid #dee2e6; /* Borde para las celdas */
+    padding: 10px; /* Espaciado interno */
+    text-align: left;
+}
+
+.imagen-ejercicio,
+.video-ejercicio {
+    max-height: 100px;
+    width: auto; /* Mantener la relación de aspecto */
+    margin-bottom: 15px;
+    display: block; /* Para centrar la imagen y el video */
+}
+
+.btn-actualizar {
+    display: block;
+    width: auto; /* Ancho automático */
+    padding: 10px 15px; /* Espaciado interno */
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin bordes */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor tipo puntero */
+    margin-top: 10px; /* Margen superior */
+}
+
+.btn-actualizar:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el ratón */
+    border-color: #004085; /* Color del borde al pasar el ratón */
+}
+
+.form-control-file {
+    margin-top: 10px;
+}
